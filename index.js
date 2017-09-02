@@ -2,6 +2,9 @@
  * Express/Connect validate body
  */
 
+// load debug module
+const debug = require("debug")("express-validate-body");
+
 // load AJV
 const Ajv = require("ajv");
 
@@ -30,6 +33,15 @@ const validateBody = (body, schema, options) => {
 
         try {
 
+            debug("Validating model...");
+
+            debug("Model: %o", body);
+
+            debug("Schema: %o", schema);
+
+            debug("Options: %o", options);
+
+
             // create new instance of the AJV
             const ajv = new Ajv();
 
@@ -38,6 +50,13 @@ const validateBody = (body, schema, options) => {
 
             // if validation failed
             if (!result) {
+
+                debug("Validation failed.");
+
+                debug("Errors: %o", ajv.errors);
+
+                debug("Errors text: %s", ajv.errorsText);
+
 
                 // create new error
                 const err = new Error("Request body is not valid");
@@ -62,10 +81,14 @@ const validateBody = (body, schema, options) => {
                 throw err;
             }
 
+            debug("Model is valid.");
+
             // resolve the promise
             resolve();
         }
         catch (err) {
+
+            debug("Expection thrown: %o", err);
 
             // reject the promise
             return reject(err);
@@ -81,14 +104,20 @@ const validateBody = (body, schema, options) => {
  */
 module.exports = (schema, options) => {
 
+    debug("Creating validator...");
+
     // provided schema should be an object or a string
     if (!(typeof schema === typeof '' || typeof schema === typeof {})) {
+
+        debug("Schema type is: %s", typeof schema);
 
         throw new Error(`Provided schema type (${typeof schema}) is not acceptable. I only accept string and object.`);
     }
 
     // merge options with default options
-    options = defaults(options, defaultOptions);
+    const opt = defaults(options, defaultOptions);
+
+    debug("Options: %o", opt);
 
     return (req, res, next) => {
 
@@ -97,9 +126,13 @@ module.exports = (schema, options) => {
             // if provided schema is a path or id
             if (typeof schema === typeof '') {
 
+                debug("Loading schema %s...", schema);
+
                 // load schema
-                options.store.load(schema)
+                opt.store.load(schema)
                     .then((s) => {
+
+                        debug("Loaded schema: %o", s);
 
                         // validate body
                         validateBody(req.body, s)
@@ -117,6 +150,8 @@ module.exports = (schema, options) => {
             }
         }
         catch (err) {
+
+            debug("Body validation failed. %o", err);
 
             // call next middleware with error
             return next(err);
