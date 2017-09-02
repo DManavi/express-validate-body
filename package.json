@@ -1,0 +1,36 @@
+{
+  "name": "express-validate-body",
+  "version": "0.1.0",
+  "description": "Validate body of the request in express/connect base-on JSON schema drafts, using AJV module",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DManavi/express-validate-body.git"
+  },
+  "keywords": [
+    "express",
+    "connect",
+    "validate",
+    "ajv",
+    "schema",
+    "json"
+  ],
+  "author": {
+    "name": "Danial Manavi",
+    "email": "dmanavi@live.com",
+    "url": "www.dmanavi.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DManavi/express-validate-body/issues"
+  },
+  "homepage": "https://github.com/DManavi/express-validate-body#readme",
+  "dependencies": {
+    "ajv": "^5.2.2",
+    "debug": "^3.0.1",
+    "defaults": "^1.0.3"
+  }
+}
