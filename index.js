@@ -3,7 +3,7 @@
  */
 
 // load debug module
-const debug = require("debug")("express-validate-body");
+const debug = require("debug")("express:validate-body");
 
 // load AJV
 const Ajv = require("ajv");
