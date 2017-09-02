@@ -1,6 +1,6 @@
 {
   "name": "express-validate-body",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Validate body of the request in express/connect base-on JSON schema drafts, using AJV module",
   "main": "index.js",
   "scripts": {
